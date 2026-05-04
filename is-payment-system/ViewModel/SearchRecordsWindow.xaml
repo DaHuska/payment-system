@@ -1,0 +1,354 @@
+﻿<Window x:Class="is_payment_system.ViewModel.SearchRecordsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:is_payment_system.ViewModel"
+        Title="Search Records"
+        Height="720"
+        Width="1100"
+        WindowStartupLocation="CenterScreen"
+        Background="#1f2235">
+
+    <Window.DataContext>
+        <vm:SearchRecordsViewModel/>
+    </Window.DataContext>
+
+    <Window.Resources>
+
+        <Style x:Key="HeaderText" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="22"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+
+        <Style x:Key="SubtleText" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#aab0d6"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+
+        <Style x:Key="FieldLabel" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#aab0d6"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="0,0,0,4"/>
+        </Style>
+
+        <Style x:Key="PanelStyle" TargetType="Border">
+            <Setter Property="Background" Value="#2d3250"/>
+            <Setter Property="CornerRadius" Value="18"/>
+            <Setter Property="Padding" Value="16"/>
+        </Style>
+
+        <Style x:Key="FormTextBox" TargetType="TextBox">
+            <Setter Property="Background" Value="#1f2235"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#424769"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="CaretBrush" Value="White"/>
+            <Setter Property="MinWidth" Value="220"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="8"
+                                Padding="{TemplateBinding Padding}">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="AccentButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#f9b17a"/>
+            <Setter Property="Foreground" Value="#2d3250"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="14,8"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="10"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              TextElement.Foreground="{TemplateBinding Foreground}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#ffc599"/>
+                                <Setter Property="Foreground" Value="GhostWhite"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Opacity" Value="0.85"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ResultsDataGridStyle" TargetType="DataGrid">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="GridLinesVisibility" Value="Horizontal"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="#3a3f63"/>
+            <Setter Property="VerticalGridLinesBrush" Value="Transparent"/>
+            <Setter Property="RowBackground" Value="Transparent"/>
+            <Setter Property="AlternatingRowBackground" Value="#262a45"/>
+            <Setter Property="HeadersVisibility" Value="Column"/>
+            <Setter Property="AutoGenerateColumns" Value="True"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="CanUserAddRows" Value="False"/>
+            <Setter Property="CanUserDeleteRows" Value="False"/>
+            <Setter Property="ColumnHeaderStyle">
+                <Setter.Value>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="Background" Value="#424769"/>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="Padding" Value="10,8"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="RowStyle">
+                <Setter.Value>
+                    <Style TargetType="DataGridRow">
+                        <Setter Property="Foreground" Value="White"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#34395a"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="CellStyle">
+                <Setter.Value>
+                    <Style TargetType="DataGridCell">
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="Padding" Value="8,6"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="DataGridCell">
+                                    <Border Background="{TemplateBinding Background}"
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                            Padding="{TemplateBinding Padding}">
+                                        <ContentPresenter VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="TabsTabItem" TargetType="TabItem">
+            <Setter Property="Background" Value="#2d3250"/>
+            <Setter Property="Foreground" Value="#aab0d6"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="20,8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="10,10,0,0"
+                                Padding="{TemplateBinding Padding}"
+                                Margin="0,0,4,0">
+                            <ContentPresenter ContentSource="Header"
+                                              HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#f9b17a"/>
+                                <Setter Property="Foreground" Value="#2d3250"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#424769"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Style="{StaticResource PanelStyle}" Margin="0,0,0,15">
+            <StackPanel>
+                <TextBlock Text="Search Records" Style="{StaticResource HeaderText}"/>
+                <TextBlock Text="Find Users, Cards or Transactions by various criteria. Leave the inputs empty to list everything."
+                           Style="{StaticResource SubtleText}"
+                           Margin="0,4,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Tabbed search -->
+        <Border Grid.Row="1" Style="{StaticResource PanelStyle}">
+            <TabControl Background="Transparent" BorderThickness="0">
+
+                <!-- ─── Search Users ─────────────────────────────────── -->
+                <TabItem Header="Search Users" Style="{StaticResource TabsTabItem}">
+                    <Grid Margin="0,15,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0" Margin="0,0,0,15">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                                <TextBlock Text="Email" Style="{StaticResource FieldLabel}"/>
+                                <TextBox Style="{StaticResource FormTextBox}"
+                                         Text="{Binding SearchUserEmail, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1" Margin="10,0,10,0">
+                                <TextBlock Text="User Id" Style="{StaticResource FieldLabel}"/>
+                                <TextBox Style="{StaticResource FormTextBox}"
+                                         Text="{Binding SearchUserId, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+
+                            <Button Grid.Column="2"
+                                    VerticalAlignment="Bottom"
+                                    Style="{StaticResource AccentButtonStyle}"
+                                    Command="{Binding SearchUsersCommand}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="🔍" Margin="0,0,8,0"/>
+                                    <TextBlock Text="Search"/>
+                                </StackPanel>
+                            </Button>
+                        </Grid>
+
+                        <DataGrid Grid.Row="1"
+                                  ItemsSource="{Binding UserResults}"
+                                  Style="{StaticResource ResultsDataGridStyle}"/>
+                    </Grid>
+                </TabItem>
+
+                <!-- ─── Search Cards ─────────────────────────────────── -->
+                <TabItem Header="Search Cards" Style="{StaticResource TabsTabItem}">
+                    <Grid Margin="0,15,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0" Margin="0,0,0,15">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                                <TextBlock Text="Card Number" Style="{StaticResource FieldLabel}"/>
+                                <TextBox Style="{StaticResource FormTextBox}"
+                                         Text="{Binding SearchCardNumber, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1" Margin="10,0,10,0">
+                                <TextBlock Text="IBAN" Style="{StaticResource FieldLabel}"/>
+                                <TextBox Style="{StaticResource FormTextBox}"
+                                         Text="{Binding SearchCardIban, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+
+                            <Button Grid.Column="2"
+                                    VerticalAlignment="Bottom"
+                                    Style="{StaticResource AccentButtonStyle}"
+                                    Command="{Binding SearchCardsCommand}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="🔍" Margin="0,0,8,0"/>
+                                    <TextBlock Text="Search"/>
+                                </StackPanel>
+                            </Button>
+                        </Grid>
+
+                        <DataGrid Grid.Row="1"
+                                  ItemsSource="{Binding CardResults}"
+                                  Style="{StaticResource ResultsDataGridStyle}"/>
+                    </Grid>
+                </TabItem>
+
+                <!-- ─── Search Transactions ──────────────────────────── -->
+                <TabItem Header="Search Transactions" Style="{StaticResource TabsTabItem}">
+                    <Grid Margin="0,15,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0" Margin="0,0,0,15">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                                <TextBlock Text="Sender Id" Style="{StaticResource FieldLabel}"/>
+                                <TextBox Style="{StaticResource FormTextBox}"
+                                         Text="{Binding SearchTransactionSenderId, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1" Margin="10,0,10,0">
+                                <TextBlock Text="Merchant Id (receiver)" Style="{StaticResource FieldLabel}"/>
+                                <TextBox Style="{StaticResource FormTextBox}"
+                                         Text="{Binding SearchTransactionReceiverId, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+
+                            <Button Grid.Column="2"
+                                    VerticalAlignment="Bottom"
+                                    Style="{StaticResource AccentButtonStyle}"
+                                    Command="{Binding SearchTransactionsCommand}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="🔍" Margin="0,0,8,0"/>
+                                    <TextBlock Text="Search"/>
+                                </StackPanel>
+                            </Button>
+                        </Grid>
+
+                        <DataGrid Grid.Row="1"
+                                  ItemsSource="{Binding TransactionResults}"
+                                  Style="{StaticResource ResultsDataGridStyle}"/>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+        </Border>
+
+        <!-- Status -->
+        <Border Grid.Row="2" Style="{StaticResource PanelStyle}" Margin="0,15,0,0" Padding="16,10">
+            <TextBlock Text="{Binding StatusMessage}"
+                       Style="{StaticResource SubtleText}"/>
+        </Border>
+    </Grid>
+</Window>

@@ -1,0 +1,313 @@
+﻿<Window x:Class="is_payment_system.ViewModel.AddRecordsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:is_payment_system.ViewModel"
+        xmlns:enums="clr-namespace:is_payment_system.Model.Enums"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        Title="Add Records"
+        Height="720"
+        Width="900"
+        WindowStartupLocation="CenterScreen"
+        Background="#1f2235">
+
+    <Window.DataContext>
+        <vm:AddRecordsViewModel/>
+    </Window.DataContext>
+
+    <Window.Resources>
+
+        <ObjectDataProvider x:Key="UserRoleEnumValues"
+                            MethodName="GetValues"
+                            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="enums:UserRole"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+
+        <ObjectDataProvider x:Key="TransactionStatusEnumValues"
+                            MethodName="GetValues"
+                            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="enums:TransactionStatus"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+
+        <Style x:Key="HeaderText" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="22"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+
+        <Style x:Key="SubtleText" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#aab0d6"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+
+        <Style x:Key="FieldLabel" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#aab0d6"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="0,0,0,4"/>
+        </Style>
+
+        <Style x:Key="PanelStyle" TargetType="Border">
+            <Setter Property="Background" Value="#2d3250"/>
+            <Setter Property="CornerRadius" Value="18"/>
+            <Setter Property="Padding" Value="20"/>
+        </Style>
+
+        <Style x:Key="FormTextBox" TargetType="TextBox">
+            <Setter Property="Background" Value="#1f2235"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#424769"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="Margin" Value="0,0,0,12"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="CaretBrush" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="8"
+                                Padding="{TemplateBinding Padding}">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="FormComboBox" TargetType="ComboBox">
+            <Setter Property="Background" Value="#1f2235"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#424769"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="Margin" Value="0,0,0,12"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+
+        <Style x:Key="FormDatePicker" TargetType="DatePicker">
+            <Setter Property="Background" Value="#1f2235"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#424769"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="Margin" Value="0,0,0,12"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+
+        <Style x:Key="AccentButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#f9b17a"/>
+            <Setter Property="Foreground" Value="#2d3250"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="14,10"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="10"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              TextElement.Foreground="{TemplateBinding Foreground}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#ffc599"/>
+                                <Setter Property="Foreground" Value="GhostWhite"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Opacity" Value="0.85"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="TabsTabItem" TargetType="TabItem">
+            <Setter Property="Background" Value="#2d3250"/>
+            <Setter Property="Foreground" Value="#aab0d6"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="20,8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="10,10,0,0"
+                                Padding="{TemplateBinding Padding}"
+                                Margin="0,0,4,0">
+                            <ContentPresenter ContentSource="Header"
+                                              HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#f9b17a"/>
+                                <Setter Property="Foreground" Value="#2d3250"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#424769"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Style="{StaticResource PanelStyle}" Margin="0,0,0,15">
+            <StackPanel>
+                <TextBlock Text="Add Records" Style="{StaticResource HeaderText}"/>
+                <TextBlock Text="Insert a new User, Card or Transaction into the database"
+                           Style="{StaticResource SubtleText}"
+                           Margin="0,4,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Tabbed forms -->
+        <Border Grid.Row="1" Style="{StaticResource PanelStyle}">
+            <TabControl Background="Transparent" BorderThickness="0">
+
+                <!-- ─── Add User ─────────────────────────────────────── -->
+                <TabItem Header="Add User" Style="{StaticResource TabsTabItem}">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,15,0,0">
+                        <StackPanel MaxWidth="500" HorizontalAlignment="Stretch">
+
+                            <TextBlock Text="First Name" Style="{StaticResource FieldLabel}"/>
+                            <TextBox Style="{StaticResource FormTextBox}"
+                                     Text="{Binding NewUserFirstName, UpdateSourceTrigger=PropertyChanged}"/>
+
+                            <TextBlock Text="Last Name" Style="{StaticResource FieldLabel}"/>
+                            <TextBox Style="{StaticResource FormTextBox}"
+                                     Text="{Binding NewUserLastName, UpdateSourceTrigger=PropertyChanged}"/>
+
+                            <TextBlock Text="Email" Style="{StaticResource FieldLabel}"/>
+                            <TextBox Style="{StaticResource FormTextBox}"
+                                     Text="{Binding NewUserEmail, UpdateSourceTrigger=PropertyChanged}"/>
+
+                            <TextBlock Text="Password" Style="{StaticResource FieldLabel}"/>
+                            <TextBox Style="{StaticResource FormTextBox}"
+                                     Text="{Binding NewUserPassword, UpdateSourceTrigger=PropertyChanged}"/>
+
+                            <TextBlock Text="Role" Style="{StaticResource FieldLabel}"/>
+                            <ComboBox Style="{StaticResource FormComboBox}"
+                                      ItemsSource="{Binding Source={StaticResource UserRoleEnumValues}}"
+                                      SelectedItem="{Binding NewUserRole}"/>
+
+                            <Button Style="{StaticResource AccentButtonStyle}"
+                                    Command="{Binding AddUserCommand}"
+                                    Margin="0,10,0,0">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="＋" Margin="0,0,8,0"/>
+                                    <TextBlock Text="Add User"/>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </ScrollViewer>
+                </TabItem>
+
+                <!-- ─── Add Card ─────────────────────────────────────── -->
+                <TabItem Header="Add Card" Style="{StaticResource TabsTabItem}">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,15,0,0">
+                        <StackPanel MaxWidth="500" HorizontalAlignment="Stretch">
+
+                            <TextBlock Text="Card Number" Style="{StaticResource FieldLabel}"/>
+                            <TextBox Style="{StaticResource FormTextBox}"
+                                     Text="{Binding NewCardNumber, UpdateSourceTrigger=PropertyChanged}"/>
+
+                            <TextBlock Text="CVV" Style="{StaticResource FieldLabel}"/>
+                            <TextBox Style="{StaticResource FormTextBox}"
+                                     Text="{Binding NewCardCvv, UpdateSourceTrigger=PropertyChanged}"/>
+
+                            <TextBlock Text="IBAN" Style="{StaticResource FieldLabel}"/>
+                            <TextBox Style="{StaticResource FormTextBox}"
+                                     Text="{Binding NewCardIban, UpdateSourceTrigger=PropertyChanged}"/>
+
+                            <TextBlock Text="Expiration Date" Style="{StaticResource FieldLabel}"/>
+                            <DatePicker Style="{StaticResource FormDatePicker}"
+                                        SelectedDate="{Binding NewCardExpirationDate}"/>
+
+                            <TextBlock Text="User Id (owner)" Style="{StaticResource FieldLabel}"/>
+                            <TextBox Style="{StaticResource FormTextBox}"
+                                     Text="{Binding NewCardUserId, UpdateSourceTrigger=PropertyChanged}"/>
+
+                            <Button Style="{StaticResource AccentButtonStyle}"
+                                    Command="{Binding AddCardCommand}"
+                                    Margin="0,10,0,0">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="＋" Margin="0,0,8,0"/>
+                                    <TextBlock Text="Add Card"/>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </ScrollViewer>
+                </TabItem>
+
+                <!-- ─── Add Transaction ──────────────────────────────── -->
+                <TabItem Header="Add Transaction" Style="{StaticResource TabsTabItem}">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,15,0,0">
+                        <StackPanel MaxWidth="500" HorizontalAlignment="Stretch">
+
+                            <TextBlock Text="Amount" Style="{StaticResource FieldLabel}"/>
+                            <TextBox Style="{StaticResource FormTextBox}"
+                                     Text="{Binding NewTransactionAmount, UpdateSourceTrigger=PropertyChanged}"/>
+
+                            <TextBlock Text="Timestamp" Style="{StaticResource FieldLabel}"/>
+                            <DatePicker Style="{StaticResource FormDatePicker}"
+                                        SelectedDate="{Binding NewTransactionTimestamp}"/>
+
+                            <TextBlock Text="Status" Style="{StaticResource FieldLabel}"/>
+                            <ComboBox Style="{StaticResource FormComboBox}"
+                                      ItemsSource="{Binding Source={StaticResource TransactionStatusEnumValues}}"
+                                      SelectedItem="{Binding NewTransactionStatus}"/>
+
+                            <TextBlock Text="Sender Id (User)" Style="{StaticResource FieldLabel}"/>
+                            <TextBox Style="{StaticResource FormTextBox}"
+                                     Text="{Binding NewTransactionSenderId, UpdateSourceTrigger=PropertyChanged}"/>
+
+                            <TextBlock Text="Merchant Id" Style="{StaticResource FieldLabel}"/>
+                            <TextBox Style="{StaticResource FormTextBox}"
+                                     Text="{Binding NewTransactionMerchantId, UpdateSourceTrigger=PropertyChanged}"/>
+
+                            <Button Style="{StaticResource AccentButtonStyle}"
+                                    Command="{Binding AddTransactionCommand}"
+                                    Margin="0,10,0,0">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="＋" Margin="0,0,8,0"/>
+                                    <TextBlock Text="Add Transaction"/>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </ScrollViewer>
+                </TabItem>
+            </TabControl>
+        </Border>
+
+        <!-- Status -->
+        <Border Grid.Row="2" Style="{StaticResource PanelStyle}" Margin="0,15,0,0" Padding="16,10">
+            <TextBlock Text="{Binding StatusMessage}"
+                       Style="{StaticResource SubtleText}"/>
+        </Border>
+    </Grid>
+</Window>

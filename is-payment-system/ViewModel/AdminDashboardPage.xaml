@@ -1,0 +1,311 @@
+﻿<Page x:Class="is_payment_system.ViewModel.AdminDashboardPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:is_payment_system.ViewModel"
+      mc:Ignorable="d"
+      Title="Admin Dashboard"
+      Background="#1f2235"
+      WindowHeight="720"
+      WindowWidth="1200">
+
+    <Page.Resources>
+        <Style x:Key="SidebarButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#d7d9f7"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="14,10"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="10"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#424769"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#f9b17a"/>
+                                <Setter Property="Foreground" Value="#2d3250"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ActiveSidebarButtonStyle" TargetType="Button" BasedOn="{StaticResource SidebarButtonStyle}">
+            <Setter Property="Background" Value="#f9b17a"/>
+            <Setter Property="Foreground" Value="#2d3250"/>
+        </Style>
+
+        <Style x:Key="StatCardStyle" TargetType="Border">
+            <Setter Property="Background" Value="#2d3250"/>
+            <Setter Property="CornerRadius" Value="18"/>
+            <Setter Property="Padding" Value="18"/>
+            <Setter Property="Margin" Value="0,0,15,15"/>
+        </Style>
+
+        <Style x:Key="PanelStyle" TargetType="Border">
+            <Setter Property="Background" Value="#2d3250"/>
+            <Setter Property="CornerRadius" Value="18"/>
+            <Setter Property="Padding" Value="18"/>
+            <Setter Property="Margin" Value="0,0,0,15"/>
+        </Style>
+
+        <Style x:Key="TableCellText" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,8"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+
+        <Style x:Key="ActionButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#424769"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="10"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              TextElement.Foreground="{TemplateBinding Foreground}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#ffc599"/>
+                                <Setter Property="Foreground" Value="#2d3250"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Opacity" Value="0.85"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="230"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Border Background="#2d3250" CornerRadius="0,20,20,0">
+            <StackPanel Margin="20">
+                <TextBlock Text="PAYMENT SYSTEM"
+                           Foreground="#f9b17a"
+                           FontWeight="Bold"
+                           FontSize="16"
+                           Margin="0,10,0,30"
+                           HorizontalAlignment="Center"/>
+
+                <Border Background="#424769" CornerRadius="12" Padding="12" Margin="0,0,0,20">
+                    <StackPanel>
+                        <TextBlock Text="👨‍💼" FontSize="30" HorizontalAlignment="Center" Foreground="Snow"/>
+                        <TextBlock Text="{Binding AdminName}"
+                                   Foreground="White"
+                                   FontWeight="Bold"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,8,0,0"/>
+                        <TextBlock Text="{Binding AdminEmail}"
+                                   Foreground="#aab0d6"
+                                   FontSize="11"
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+
+                <Button Style="{StaticResource ActiveSidebarButtonStyle}" Margin="0,0,0,8">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="📊" Width="24"/>
+                        <TextBlock Text="Dashboard"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource SidebarButtonStyle}" Margin="0,0,0,8" Click="DatabaseTables_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="🗄" Width="24"/>
+                        <TextBlock Text="DB Tables"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource SidebarButtonStyle}" Margin="0,0,0,8" Click="AddRecords_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="＋" Width="24"/>
+                        <TextBlock Text="Add Records"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource SidebarButtonStyle}" Margin="0,0,0,8" Click="SearchRecords_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="🔍" Width="24"/>
+                        <TextBlock Text="Search"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource SidebarButtonStyle}" Margin="0,0,0,8" Click="Logs_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="📜" Width="24"/>
+                        <TextBlock Text="Logs"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource SidebarButtonStyle}" Margin="0,20,0,0" Click="Logout_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="🚪" Width="24"/>
+                        <TextBlock Text="Logout"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Border>
+
+        <ScrollViewer Grid.Column="1"
+                      Margin="20"
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled"
+                      CanContentScroll="True">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="80"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Border Grid.Row="0" Background="#2d3250" CornerRadius="18" Padding="10">
+                    <DockPanel>
+                        <StackPanel DockPanel.Dock="Left">
+                            <TextBlock Text="Admin Dashboard"
+                                       Foreground="White"
+                                       FontSize="26"
+                                       FontWeight="Bold"/>
+                            <TextBlock Text="Overview of system activity, users, payments and refunds"
+                                       Foreground="#aab0d6"
+                                       FontSize="12"/>
+                        </StackPanel>
+
+                        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Center"
+                                    Margin="500,0,0,10">
+                            <Button Content="Refresh"
+                                    Background="#f9b17a"
+                                    Foreground="Black"
+                                    Click="Refresh_Click"
+                                    Style="{StaticResource ActionButtonStyle}"/>
+                        </StackPanel>
+                    </DockPanel>
+                </Border>
+
+                <Grid Grid.Row="1" Margin="0,20,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Border Grid.Column="0" Style="{StaticResource StatCardStyle}">
+                        <StackPanel>
+                            <TextBlock Text="Total Users" Foreground="#aab0d6" FontSize="12"/>
+                            <TextBlock Text="{Binding TotalUsers}" Foreground="White" FontSize="26" FontWeight="Bold" Margin="0,8,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Grid.Column="1" Style="{StaticResource StatCardStyle}">
+                        <StackPanel>
+                            <TextBlock Text="Payments" Foreground="#aab0d6" FontSize="12"/>
+                            <TextBlock Text="{Binding Payments}" Foreground="White" FontSize="26" FontWeight="Bold" Margin="0,8,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Grid.Column="2" Style="{StaticResource StatCardStyle}">
+                        <StackPanel>
+                            <TextBlock Text="Refunds" Foreground="#aab0d6" FontSize="12"/>
+                            <TextBlock Text="{Binding Refunds}" Foreground="White" FontSize="26" FontWeight="Bold" Margin="0,8,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Grid.Column="3" Style="{StaticResource StatCardStyle}">
+                        <StackPanel>
+                            <TextBlock Text="Revenue" Foreground="#aab0d6" FontSize="12"/>
+                            <TextBlock Text="{Binding Revenue}" Foreground="White" FontSize="26" FontWeight="Bold" Margin="0,8,0,0"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
+                <Border Grid.Row="2" Style="{StaticResource PanelStyle}" Margin="0,0,0,15">
+                    <StackPanel>
+                        <TextBlock Text="Recent Transactions"
+                                   Foreground="White"
+                                   FontSize="18"
+                                   FontWeight="Bold"
+                                   Margin="0,0,0,15"/>
+
+                        <Grid Margin="0,0,0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0" Text="Customer" Style="{StaticResource TableCellText}" FontWeight="Bold"/>
+                            <TextBlock Grid.Column="1" Text="Amount" Style="{StaticResource TableCellText}" FontWeight="Bold"/>
+                            <TextBlock Grid.Column="2" Text="Status" Style="{StaticResource TableCellText}" FontWeight="Bold"/>
+                            <TextBlock Grid.Column="3" Text="Date" Style="{StaticResource TableCellText}" FontWeight="Bold"/>
+                            <TextBlock Grid.Column="4" Text="Action" Style="{StaticResource TableCellText}" FontWeight="Bold"/>
+                        </Grid>
+
+                        <Separator Background="#424769" Margin="0,6,0,8"/>
+
+                        <ItemsControl ItemsSource="{Binding RecentTransactions}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,2">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="2*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Grid.Column="0" Text="{Binding Customer}" Style="{StaticResource TableCellText}"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding Amount}" Style="{StaticResource TableCellText}"/>
+                                        <TextBlock Grid.Column="2" Text="{Binding Status}" Style="{StaticResource TableCellText}">
+                                            <TextBlock.Foreground>
+                                                <SolidColorBrush Color="{Binding StatusColor}"/>
+                                            </TextBlock.Foreground>
+                                        </TextBlock>
+                                        <TextBlock Grid.Column="3" Text="{Binding Date}" Style="{StaticResource TableCellText}"/>
+                                        <Button Grid.Column="4"
+                                                Content="View"
+                                                Style="{StaticResource ActionButtonStyle}"
+                                                Padding="12,4"
+                                                Click="ViewTransaction_Click"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</Page>
