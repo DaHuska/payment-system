@@ -44,7 +44,7 @@ namespace is_payment_system.ViewModel
             }
             else
             {
-                NavigationService?.Navigate(new DashboardPage());
+                NavigationService?.Navigate(new DashboardPage(user));
             }
             
             new HashLogger().Log("INFO", "User " + user.FirstName + " has logged in!");

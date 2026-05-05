@@ -125,12 +125,14 @@
                 <Border Background="#424769" CornerRadius="12" Padding="12" Margin="0,0,0,20">
                     <StackPanel>
                         <TextBlock Text="👤" FontSize="30" HorizontalAlignment="Center"/>
-                        <TextBlock Text="Welcome, User"
+                        <TextBlock x:Name="WelcomeText"
+                                   Text="Welcome, User"
                                    Foreground="White"
                                    FontWeight="Bold"
                                    HorizontalAlignment="Center"
                                    Margin="0,8,0,0"/>
-                        <TextBlock Text="user@email.com"
+                        <TextBlock x:Name="EmailText"
+                                   Text="user@email.com"
                                    Foreground="#aab0d6"
                                    FontSize="11"
                                    HorizontalAlignment="Center"/>
