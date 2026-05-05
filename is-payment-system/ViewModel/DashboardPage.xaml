@@ -205,50 +205,41 @@
                                    Foreground="#aab0d6"
                                    FontSize="12"/>
                     </StackPanel>
-
-                    <Border DockPanel.Dock="Right"
-                            Background="#424769"
-                            CornerRadius="12"
-                            Margin="40,0,15,0"
-                            Padding="12,8"
-                            VerticalAlignment="Center">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="🔔" Foreground="White" Margin="0,0,10,0"/>
-                            <TextBlock Text="3 notifications" Foreground="White"/>
-                        </StackPanel>
-                    </Border>
                 </DockPanel>
             </Border>
 
             <UniformGrid Grid.Row="1" Columns="3" Margin="0,20,0,0">
                 <Border Style="{StaticResource StatCardStyle}">
                     <StackPanel>
-                        <TextBlock Text="Total Balance" Foreground="#aab0d6" FontSize="12"/>
-                        <TextBlock Text="$12,450"
+                        <TextBlock Text="Balance" Foreground="#aab0d6" FontSize="12"/>
+                        <TextBlock x:Name="BalanceText"
+                                   Text="0"
                                    Foreground="White"
                                    FontSize="28"
                                    FontWeight="Bold"
                                    Margin="0,8,0,0"/>
-                        <TextBlock Text="+12% this month" Foreground="#7ee787" FontSize="12"/>
+                        <TextBlock Text="Total balance" Foreground="#7ee787" FontSize="12"/>
                     </StackPanel>
                 </Border>
 
                 <Border Style="{StaticResource StatCardStyle}">
                     <StackPanel>
                         <TextBlock Text="Payments" Foreground="#aab0d6" FontSize="12"/>
-                        <TextBlock Text="148"
+                        <TextBlock x:Name="PaymentsCountText"
+                                   Text="0"
                                    Foreground="White"
                                    FontSize="28"
                                    FontWeight="Bold"
                                    Margin="0,8,0,0"/>
-                        <TextBlock Text="+24 today" Foreground="#7ee787" FontSize="12"/>
+                        <TextBlock Text="Total payments made" Foreground="#7ee787" FontSize="12"/>
                     </StackPanel>
                 </Border>
 
-                <Border Style="{StaticResource StatCardStyle}" Margin="0,0,0,15">
+                <Border Style="{StaticResource StatCardStyle}">
                     <StackPanel>
                         <TextBlock Text="Pending" Foreground="#aab0d6" FontSize="12"/>
-                        <TextBlock Text="7"
+                        <TextBlock x:Name="PendingCountText"
+                                   Text="0"
                                    Foreground="White"
                                    FontSize="28"
                                    FontWeight="Bold"

@@ -100,4 +100,22 @@ public class TransactionRepository
         ctx.SaveChanges();
         return transactions.Count;
     }
+    
+    public int CountPaymentsByUser(int userId)
+    {
+        using var ctx = new PaymentSystemDbContext();
+    
+        return (from t in ctx.Transactions
+            where t.Sender == userId
+            select t).Count();
+    }
+    
+    public int CountPendingPaymentsByUser(int userId)
+    {
+        using var ctx = new PaymentSystemDbContext();
+    
+        return (from t in ctx.Transactions
+            where t.Sender == userId && t.Status == 0
+            select t).Count();
+    }
 }

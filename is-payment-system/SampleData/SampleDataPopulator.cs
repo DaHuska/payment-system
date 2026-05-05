@@ -173,11 +173,11 @@ namespace is_payment_system.SampleData
             // (Id, UserId, CardNumber, CVV, Iban, createdDaysAgo, expiresInDays)
             var cards = new (int, int, string, decimal, string, string, int, int)[]
             {
-                (1, 2, "4532 1234 5678 9012", 1233, "123", "BG80BNBG96611020345678", 60,  365 * 3),   // Maria's Visa
-                (2, 2, "5555 9876 5432 1000", 12000, "456", "BG18RZBB91550123456789", 45,  365 * 2),   // Maria's Mastercard
-                (3, 3, "3782 8224 6310 005",  5000, "789", "BG12UNCR70001523456789", 30,  365 * 4),   // Georgi's AmEx
-                (4, 2, "6011 2233 4455 6677", 4000, "321", "BG80BNBG96611020345678", 400, -10),       // Maria's expired Visa
-                (5, 5, "4916 5577 1234 9876", 2000, "654", "BG24STSA93000026543210",  5,  365),       // Anna's Visa
+                (1, 1, "4532 1234 5678 9012", 1233, "123", "BG80BNBG96611020345678", 60,  365 * 3),
+                (2, 2, "5555 9876 5432 1000", 12000, "456", "BG18RZBB91550123456789", 45,  365 * 2),
+                (3, 3, "3782 8224 6310 005",  5000, "789", "BG12UNCR70001523456789", 30,  365 * 4),
+                (4, 4, "6011 2233 4455 6677", 4000, "321", "BG80BNBG96611020345678", 400, -10),
+                (5, 5, "4916 5577 1234 9876", 2000, "654", "BG24STSA93000026543210",  5,  365),
             };
 
             foreach (var (id, userId, number, balance, cvv, iban, createdDaysAgo, expiresInDays) in cards)
