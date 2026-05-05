@@ -204,12 +204,13 @@ namespace is_payment_system.SampleData
             // (Id, Amount, hoursAgo, Status, SenderId, MerchantId)
             var transactions = new (int, decimal, int, TransactionStatus, int, int)[]
             {
-                (1,  150.00m,    24 * 5, TransactionStatus.COMPLETED, 2, 1),  // Maria → Кафе Аромат, 5 days ago
+                (1,  150.00m,    24 * 5, TransactionStatus.PENDING, 2, 1),  // Maria → Кафе Аромат, 5 days ago
                 (2,   45.50m,    24 * 3, TransactionStatus.COMPLETED, 2, 2),  // Maria → TechStore, 3 days ago
                 (3,  200.00m,    24 * 1, TransactionStatus.PENDING,   3, 2),  // Georgi → TechStore, 1 day ago
                 (4,   99.99m,         2, TransactionStatus.FAILED,    5, 1),  // Anna → Кафе Аромат, 2 hours ago
                 (5, 1250.00m,        12, TransactionStatus.COMPLETED, 2, 2),  // Maria → TechStore, 12 hours ago
                 (6,   35.00m,   24 * 30, TransactionStatus.COMPLETED, 3, 1),  // Georgi → Кафе Аромат, 30 days ago
+                (7,  75.00m,    12 * 5, TransactionStatus.FAILED, 2, 1),
             };
 
             foreach (var (id, amount, hoursAgo, status, senderId, merchantId) in transactions)
