@@ -27,14 +27,14 @@ namespace is_payment_system.ViewModel
         private void Login_Click(object sender, RoutedEventArgs e)
         {
             var email = EmailTextBox.Text?.Trim();
-            var password = PasswordBox.Password;
+            var password = PasswordBox.Password.Trim();
 
             var user = _viewModel.Login(email, password);
 
             if (user == null)
             {
                 MessageBox.Show("Invalid username or password.", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Warning);
-                new HashLogger().Log("ERROR", "User " + user.FirstName + " failed to log in!");
+                new HashLogger().Log("ERROR", "User " + email + " failed to log in!");
                 return;
             }
 
