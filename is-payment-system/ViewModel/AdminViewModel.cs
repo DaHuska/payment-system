@@ -125,7 +125,7 @@ namespace is_payment_system.ViewModel
                 .ToList();
 
             Payments = transactions.Count.ToString();
-            Refunds = transactions.Count(t => t.Status == TransactionStatus.COMPLETED).ToString();
+            Refunds = transactions.Count(t => t.Status == TransactionStatus.REFUNDED).ToString();
 
             var revenueValue = transactions
                 .Where(t => t.Status == TransactionStatus.COMPLETED)

@@ -78,18 +78,18 @@ namespace is_payment_system.ViewModel
             
             var transaction = _viewModel.TransactionRepository.FindTransactionById(item.TransactionId);
             var merchant = _viewModel.MerchantRepository.FindMerchantById(transaction.Recipient);
-            if (transaction == null)
-                return;
+            var client = _viewModel.UserRepository.GetUserByID(transaction.Sender);
+            var card = _viewModel.CardRepository.FindCardByUserId(transaction.Sender);
 
             var viewModel = new TransactionDetailsViewModel
             {
-                Recipient = merchant.BusinessName.ToString(),
+                Recipient = merchant.BusinessName,
                 Description = $"Sender: {transaction.Sender}",
                 TransactionIdText = transaction.Id.ToString(),
                 Date = transaction.Timestamp.ToString("yyyy-MM-dd HH:mm"),
-                PaymentMethod = "N/A",
+                PaymentMethod = card.CardNumber,
                 Status = transaction.Status.ToString(),
-                Notes = $"Sender ID: {transaction.Sender}, Recipient ID: {transaction.Recipient}",
+                Notes = $"Transaction {transaction.Status}. {client.FirstName} {client.LastName} sent transaction to {merchant.BusinessName}",
                 Subtotal = transaction.Amount.ToString("0.00"),
                 Fee = "0.00",
                 Total = transaction.Amount.ToString("0.00")

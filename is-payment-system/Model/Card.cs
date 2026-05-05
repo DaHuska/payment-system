@@ -10,6 +10,7 @@ namespace is_payment_system.Model
         private string _cardNumber;
         private string _cvv;
         private string _iban;
+        private decimal _balance;
         private DateTime _createdDate;
         private DateTime _expirationDate;
 
@@ -53,6 +54,18 @@ namespace is_payment_system.Model
         {
             get => _createdDate;
             set => _createdDate = value;
+        }
+
+        public decimal Balance
+        {
+            get => _balance;
+            set => _balance = value;
+        }
+
+        public int UserId
+        {
+            get => _userId;
+            set => _userId = value;
         }
     }
 }

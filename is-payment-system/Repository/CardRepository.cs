@@ -34,6 +34,14 @@ public class CardRepository
                 select c).FirstOrDefault();
     }
 
+    public Card FindCardByUserId(int id)
+    {
+        using var ctx = new PaymentSystemDbContext();
+        return (from c in ctx.Cards
+            where c.UserId == id
+            select c).FirstOrDefault();
+    }
+
     public Card FindCardByIBAN(string iban)
     {
         using var ctx = new PaymentSystemDbContext();
