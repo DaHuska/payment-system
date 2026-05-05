@@ -54,6 +54,7 @@
                         Id INT AUTO_INCREMENT PRIMARY KEY,
                         UserId INT NOT NULL,
                         CardNumber VARCHAR(32) NOT NULL,
+                        Balance DECIMAL(18,2),
                         CVV VARCHAR(10) NOT NULL,
                         Iban VARCHAR(34) NOT NULL,
                         CreatedDate DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,

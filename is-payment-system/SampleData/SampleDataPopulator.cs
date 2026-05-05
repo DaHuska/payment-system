@@ -7,15 +7,6 @@ using MySqlConnector;
 
 namespace is_payment_system.SampleData
 {
-    /// <summary>
-    /// Populates the database with a curated set of test data covering every table
-    /// (Users, Merchants, MerchantOwners, Cards, Transactions, Logs) so the full
-    /// admin/client/merchant flow plus the DB Tables and Logs windows can be exercised
-    /// end-to-end without manually creating records.
-    ///
-    /// Idempotent: if the Users table already has rows, Populate() is a no-op. Use
-    /// Repopulate() to wipe and reseed (handy during development).
-    /// </summary>
     public static class SampleDataPopulator
     {
         public static void Populate()
@@ -92,10 +83,7 @@ namespace is_payment_system.SampleData
             Execute(con, "ALTER TABLE Transactions AUTO_INCREMENT = 1;");
             Execute(con, "ALTER TABLE Logs AUTO_INCREMENT = 1;");
         }
-
-        // ──────────────────────────────────────────────────────────────────
-        // Users — 1 admin + 4 regular users with mixed active/inactive state.
-        // ──────────────────────────────────────────────────────────────────
+        
         private static void SeedUsers(MySqlConnection con, MySqlTransaction tx)
         {
             const string sql = @"
@@ -126,10 +114,7 @@ namespace is_payment_system.SampleData
                 cmd.ExecuteNonQuery();
             }
         }
-
-        // ──────────────────────────────────────────────────────────────────
-        // Merchants — three businesses with different statuses and balances.
-        // ──────────────────────────────────────────────────────────────────
+        
         private static void SeedMerchants(MySqlConnection con, MySqlTransaction tx)
         {
             const string sql = @"
@@ -156,11 +141,7 @@ namespace is_payment_system.SampleData
                 cmd.ExecuteNonQuery();
             }
         }
-
-        // ──────────────────────────────────────────────────────────────────
-        // MerchantOwners — M2M between Users and Merchants.
-        // Maria (user 2) owns merchants 1 and 2; Georgi (user 3) owns merchant 3.
-        // ──────────────────────────────────────────────────────────────────
+        
         private static void SeedMerchantOwners(MySqlConnection con, MySqlTransaction tx)
         {
             const string sql = @"
@@ -182,33 +163,30 @@ namespace is_payment_system.SampleData
                 cmd.ExecuteNonQuery();
             }
         }
-
-        // ──────────────────────────────────────────────────────────────────
-        // Cards — mix of active and expired cards for different users.
-        // Card 4 is intentionally expired so DeleteExpiredCards() can be tested.
-        // ──────────────────────────────────────────────────────────────────
+        
         private static void SeedCards(MySqlConnection con, MySqlTransaction tx)
         {
             const string sql = @"
-                INSERT INTO Cards (Id, UserId, CardNumber, CVV, Iban, CreatedDate, ExpirationDate)
-                VALUES (@id, @userId, @cardNumber, @cvv, @iban, @createdDate, @expirationDate);";
+                INSERT INTO Cards (Id, UserId, CardNumber, Balance, CVV, Iban, CreatedDate, ExpirationDate)
+                VALUES (@id, @userId, @cardNumber, @balance, @cvv, @iban, @createdDate, @expirationDate);";
 
             // (Id, UserId, CardNumber, CVV, Iban, createdDaysAgo, expiresInDays)
-            var cards = new (int, int, string, string, string, int, int)[]
+            var cards = new (int, int, string, decimal, string, string, int, int)[]
             {
-                (1, 2, "4532 1234 5678 9012", "123", "BG80BNBG96611020345678", 60,  365 * 3),   // Maria's Visa
-                (2, 2, "5555 9876 5432 1000", "456", "BG18RZBB91550123456789", 45,  365 * 2),   // Maria's Mastercard
-                (3, 3, "3782 8224 6310 005",  "789", "BG12UNCR70001523456789", 30,  365 * 4),   // Georgi's AmEx
-                (4, 2, "6011 2233 4455 6677", "321", "BG80BNBG96611020345678", 400, -10),       // Maria's expired Visa
-                (5, 5, "4916 5577 1234 9876", "654", "BG24STSA93000026543210",  5,  365),       // Anna's Visa
+                (1, 2, "4532 1234 5678 9012", 1233, "123", "BG80BNBG96611020345678", 60,  365 * 3),   // Maria's Visa
+                (2, 2, "5555 9876 5432 1000", 12000, "456", "BG18RZBB91550123456789", 45,  365 * 2),   // Maria's Mastercard
+                (3, 3, "3782 8224 6310 005",  5000, "789", "BG12UNCR70001523456789", 30,  365 * 4),   // Georgi's AmEx
+                (4, 2, "6011 2233 4455 6677", 4000, "321", "BG80BNBG96611020345678", 400, -10),       // Maria's expired Visa
+                (5, 5, "4916 5577 1234 9876", 2000, "654", "BG24STSA93000026543210",  5,  365),       // Anna's Visa
             };
 
-            foreach (var (id, userId, number, cvv, iban, createdDaysAgo, expiresInDays) in cards)
+            foreach (var (id, userId, number, balance, cvv, iban, createdDaysAgo, expiresInDays) in cards)
             {
                 using var cmd = new MySqlCommand(sql, con, tx);
                 cmd.Parameters.AddWithValue("@id", id);
                 cmd.Parameters.AddWithValue("@userId", userId);
                 cmd.Parameters.AddWithValue("@cardNumber", number);
+                cmd.Parameters.AddWithValue("@balance", balance);
                 cmd.Parameters.AddWithValue("@cvv", cvv);
                 cmd.Parameters.AddWithValue("@iban", iban);
                 cmd.Parameters.AddWithValue("@createdDate", DateTime.Now.AddDays(-createdDaysAgo));
@@ -216,11 +194,7 @@ namespace is_payment_system.SampleData
                 cmd.ExecuteNonQuery();
             }
         }
-
-        // ──────────────────────────────────────────────────────────────────
-        // Transactions — different statuses, senders, merchants and ages.
-        // Transaction 6 is old enough to test DeleteOldTransactions().
-        // ──────────────────────────────────────────────────────────────────
+        
         private static void SeedTransactions(MySqlConnection con, MySqlTransaction tx)
         {
             const string sql = @"
@@ -250,11 +224,7 @@ namespace is_payment_system.SampleData
                 cmd.ExecuteNonQuery();
             }
         }
-
-        // ──────────────────────────────────────────────────────────────────
-        // Logs — sample events from both FileLogger and HashLogger.
-        // Lets the LogsWindow be tested without needing to manually trigger logs.
-        // ──────────────────────────────────────────────────────────────────
+        
         private static void SeedLogs(MySqlConnection con, MySqlTransaction tx)
         {
             const string sql = @"
@@ -281,7 +251,7 @@ namespace is_payment_system.SampleData
                 cmd.Parameters.AddWithValue("@timestamp", DateTime.Now.AddMinutes(-minutesAgo));
                 cmd.Parameters.AddWithValue("@loggerType", loggerType);
                 cmd.ExecuteNonQuery();
-            }
+            }   
         }
 
         private static void PrintSummary(MySqlConnection con)

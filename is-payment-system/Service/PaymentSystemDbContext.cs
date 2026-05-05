@@ -62,6 +62,7 @@ public class PaymentSystemDbContext : DbContext
             entity.HasKey(c => c.Id);
             entity.Property(c => c.Id).HasColumnName("Id").ValueGeneratedOnAdd();
             entity.Property(c => c.CardNumber).HasColumnName("CardNumber").IsRequired();
+            entity.Property(c => c.Balance).HasColumnName("Balance").IsRequired();
             entity.Property(c => c.CVV).HasColumnName("CVV").IsRequired();
             entity.Property(c => c.Iban).HasColumnName("Iban").IsRequired();
             entity.Property(c => c.CreatedDate).HasColumnName("CreatedDate");
