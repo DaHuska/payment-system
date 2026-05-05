@@ -118,4 +118,13 @@ public class TransactionRepository
             where t.Sender == userId && t.Status == 0
             select t).Count();
     }
+    
+    public List<Transaction> FindTransactionsBySenderId(int id)
+    {
+        using var ctx = new PaymentSystemDbContext();
+        return (from t in ctx.Transactions
+            where t.Sender == id
+            orderby t.Timestamp descending
+            select t).ToList();
+    }
 }
