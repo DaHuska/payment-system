@@ -12,6 +12,6 @@ public partial class PaymentPage : Page
 
     private void PayNow_Click(object sender, RoutedEventArgs e)
     {
-        NavigationService?.Navigate(new TransactionDetailsPage());
+        NavigationService?.Navigate(new DashboardPage());
     }
 }

@@ -76,7 +76,6 @@
                         Padding="12,8"
                         VerticalAlignment="Center">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="✅" Foreground="White" Margin="0,0,10,0"/>
                         <TextBlock Text="{Binding Status}" Foreground="White"/>
                     </StackPanel>
                 </Border>
@@ -158,21 +157,21 @@
 
                         <Border Background="#424769" CornerRadius="12" Padding="12" Margin="0,0,0,10">
                             <DockPanel>
-                                <TextBlock Text="Subtotal" Foreground="#d7d9f7"/>
+                                <TextBlock Text="Subtotal $" Foreground="#d7d9f7"/>
                                 <TextBlock Text="{Binding Subtotal}" Foreground="White" DockPanel.Dock="Right"/>
                             </DockPanel>
                         </Border>
 
                         <Border Background="#424769" CornerRadius="12" Padding="12" Margin="0,0,0,10">
                             <DockPanel>
-                                <TextBlock Text="Fee" Foreground="#d7d9f7"/>
+                                <TextBlock Text="Fee $" Foreground="#d7d9f7"/>
                                 <TextBlock Text="{Binding Fee}" Foreground="White" DockPanel.Dock="Right"/>
                             </DockPanel>
                         </Border>
 
                         <Border Background="#424769" CornerRadius="12" Padding="12">
                             <DockPanel>
-                                <TextBlock Text="Total" Foreground="#d7d9f7" FontWeight="Bold"/>
+                                <TextBlock Text="Total $" Foreground="#d7d9f7" FontWeight="Bold"/>
                                 <TextBlock Text="{Binding Total}" Foreground="#f9b17a" DockPanel.Dock="Right" FontWeight="Bold"/>
                             </DockPanel>
                         </Border>

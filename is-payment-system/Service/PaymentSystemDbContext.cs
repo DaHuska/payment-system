@@ -66,10 +66,7 @@ public class PaymentSystemDbContext : DbContext
             entity.Property(c => c.Iban).HasColumnName("Iban").IsRequired();
             entity.Property(c => c.CreatedDate).HasColumnName("CreatedDate");
             entity.Property(c => c.ExpirationDate).HasColumnName("ExpirationDate");
-
-            // The Cards table has a UserId column that the Card model doesn't expose.
-            // It is registered as a shadow property so EF Core knows about it without
-            // changing the public model surface.
+            
             entity.Property<int>("UserId").HasColumnName("UserId");
         });
 
