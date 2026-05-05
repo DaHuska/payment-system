@@ -22,17 +22,6 @@ public class UserRepository
         }
     }
 
-    public int NextId
-    {
-        get
-        {
-            using var ctx = new PaymentSystemDbContext();
-            var maxId = (from u in ctx.Users
-                         select (int?)u.Id).Max() ?? 0;
-            return maxId + 1;
-        }
-    }
-
     public void AddUser(User user)
     {
         using var ctx = new PaymentSystemDbContext();

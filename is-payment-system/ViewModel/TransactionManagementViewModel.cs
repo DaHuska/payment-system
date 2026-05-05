@@ -37,12 +37,12 @@ namespace is_payment_system.ViewModel
 
         public Transaction FindTransactionBySender(int senderId)
         {
-            return _transactionRepository.FindTransactionBySenderID(senderId);
+            return _transactionRepository.FindTransactionBySenderId(senderId);
         }
 
         public Transaction FindTransactionByReceiver(int receiverId)
         {
-            return _transactionRepository.FindTransactionByReceiverID(receiverId);
+            return _transactionRepository.FindTransactionByReceiverId(receiverId);
         }
 
         public bool DeleteTransactionById(int id)

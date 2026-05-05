@@ -26,10 +26,10 @@ namespace is_payment_system.ViewModel
 
         private void Login_Click(object sender, RoutedEventArgs e)
         {
-            var username = UsernameTextBox.Text?.Trim();
+            var email = EmailTextBox.Text?.Trim();
             var password = PasswordBox.Password;
 
-            var user = _viewModel.Login(username, password);
+            var user = _viewModel.Login(email, password);
 
             if (user == null)
             {

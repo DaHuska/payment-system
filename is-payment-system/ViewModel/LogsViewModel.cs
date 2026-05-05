@@ -29,9 +29,7 @@ namespace is_payment_system.ViewModel
         }
 
         public LogsViewModel()
-            : this(new LogRepository())
-        {
-        }
+            : this(new LogRepository()) {}
 
         public LogsViewModel(LogRepository logRepository)
         {

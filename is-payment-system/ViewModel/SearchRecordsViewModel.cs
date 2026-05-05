@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using is_payment_system.Logging;
 using is_payment_system.Model;
 
 namespace is_payment_system.ViewModel
@@ -50,7 +51,6 @@ namespace is_payment_system.ViewModel
             SearchTransactionsCommand = new RelayCommand(SearchTransactions);
         }
 
-        // ─── Users search ───────────────────────────────────────────────
         public string SearchUserEmail { get; set; }
         public string SearchUserId { get; set; }
 
@@ -90,7 +90,6 @@ namespace is_payment_system.ViewModel
             }
         }
 
-        // ─── Cards search ───────────────────────────────────────────────
         public string SearchCardNumber { get; set; }
         public string SearchCardIban { get; set; }
 
@@ -128,7 +127,6 @@ namespace is_payment_system.ViewModel
             }
         }
 
-        // ─── Transactions search ────────────────────────────────────────
         public string SearchTransactionSenderId { get; set; }
         public string SearchTransactionReceiverId { get; set; }
 
@@ -161,14 +159,15 @@ namespace is_payment_system.ViewModel
                 }
 
                 StatusMessage = $"Transactions: found {TransactionResults.Count} match(es).";
+                new HashLogger().Log("INFO", StatusMessage);
             }
             catch (Exception ex)
             {
                 StatusMessage = $"Transaction search failed: {ex.Message}";
+                new HashLogger().Log("ERROR", StatusMessage);
             }
         }
 
-        // ─── Status & INotifyPropertyChanged plumbing ───────────────────
         public string StatusMessage
         {
             get => _statusMessage;

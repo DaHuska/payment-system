@@ -45,12 +45,10 @@ namespace is_payment_system.ViewModel
             AddCardCommand = new RelayCommand(AddCard);
             AddTransactionCommand = new RelayCommand(AddTransaction);
 
-            // Sensible defaults so the form never starts in a "broken" state.
             NewCardExpirationDate = DateTime.Now.AddYears(3);
             NewTransactionTimestamp = DateTime.Now;
         }
 
-        // ─── User form ──────────────────────────────────────────────────
         public string NewUserFirstName { get; set; }
         public string NewUserLastName { get; set; }
         public string NewUserEmail { get; set; }
@@ -69,6 +67,7 @@ namespace is_payment_system.ViewModel
                     || string.IsNullOrWhiteSpace(NewUserPassword))
                 {
                     StatusMessage = "All user fields are required.";
+                    new HashLogger().Log("ERROR", StatusMessage);
                     return;
                 }
 
@@ -111,7 +110,6 @@ namespace is_payment_system.ViewModel
             OnPropertyChanged(nameof(NewUserRole));
         }
 
-        // ─── Card form ──────────────────────────────────────────────────
         public string NewCardNumber { get; set; }
         public string NewCardCvv { get; set; }
         public string NewCardIban { get; set; }
@@ -129,12 +127,14 @@ namespace is_payment_system.ViewModel
                     || string.IsNullOrWhiteSpace(NewCardIban))
                 {
                     StatusMessage = "Card number, CVV and IBAN are required.";
+                    new HashLogger().Log("ERROR", StatusMessage);
                     return;
                 }
 
                 if (NewCardUserId <= 0)
                 {
                     StatusMessage = "User Id must be a positive number.";
+                    new HashLogger().Log("ERROR", StatusMessage);
                     return;
                 }
 
@@ -175,7 +175,6 @@ namespace is_payment_system.ViewModel
             OnPropertyChanged(nameof(NewCardUserId));
         }
 
-        // ─── Transaction form ───────────────────────────────────────────
         public decimal NewTransactionAmount { get; set; }
         public DateTime NewTransactionTimestamp { get; set; }
         public TransactionStatus NewTransactionStatus { get; set; } = TransactionStatus.PENDING;
@@ -191,12 +190,14 @@ namespace is_payment_system.ViewModel
                 if (NewTransactionAmount <= 0)
                 {
                     StatusMessage = "Amount must be greater than zero.";
+                    new HashLogger().Log("ERROR", StatusMessage);
                     return;
                 }
 
                 if (NewTransactionSenderId <= 0 || NewTransactionMerchantId <= 0)
                 {
                     StatusMessage = "Sender Id and Merchant Id must be positive numbers.";
+                    new HashLogger().Log("ERROR", StatusMessage);
                     return;
                 }
 
@@ -237,7 +238,6 @@ namespace is_payment_system.ViewModel
             OnPropertyChanged(nameof(NewTransactionMerchantId));
         }
 
-        // ─── Status & INotifyPropertyChanged plumbing ───────────────────
         public string StatusMessage
         {
             get => _statusMessage;

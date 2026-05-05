@@ -1,22 +1,21 @@
-﻿using System;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
-using System.Windows.Input;
-using is_payment_system.Logging;
 using is_payment_system.Model;
+
+namespace is_payment_system.ViewModel;
 
 public class LoginViewModel
 {
-    public string Username { get; set; }
-    public string Password { get; set; }
+    private UserRepository _userRepository;
 
-    public ICommand LoginCommand { get; }
+    public LoginViewModel()
+    {
+        _userRepository = new UserRepository();
+    }
 
     public User? Login(string email, string password)
     {
-        UserRepository repo = new UserRepository();
-
-        var user = repo.Users.FirstOrDefault(u =>
+        var user = _userRepository.Users.FirstOrDefault(u =>
             u.Email == email && u.Password == hashPass(password));
 
         return user;

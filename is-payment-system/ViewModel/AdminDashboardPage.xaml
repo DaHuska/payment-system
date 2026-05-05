@@ -118,7 +118,7 @@
 
                 <Border Background="#424769" CornerRadius="12" Padding="12" Margin="0,0,0,20">
                     <StackPanel>
-                        <TextBlock Text="👨‍💼" FontSize="30" HorizontalAlignment="Center" Foreground="Snow"/>
+                        <TextBlock Text="👨‍💼" FontSize="30" HorizontalAlignment="Center" Foreground="LightGray"/>
                         <TextBlock Text="{Binding AdminName}"
                                    Foreground="White"
                                    FontWeight="Bold"

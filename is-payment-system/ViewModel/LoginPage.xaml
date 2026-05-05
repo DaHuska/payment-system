@@ -84,9 +84,9 @@
                                        VerticalAlignment="Center"/>
 
                             <TextBox Grid.Column="1"
-                                     x:Name="UsernameTextBox"
+                                     x:Name="EmailTextBox"
                                      Style="{StaticResource WatermarkTextBox}"
-                                     Tag="Username or email"/>
+                                     Tag="Email"/>
                         </Grid>
                     </Border>
 

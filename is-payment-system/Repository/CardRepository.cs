@@ -6,9 +6,7 @@ namespace is_payment_system.Repository;
 
 public class CardRepository
 {
-    public CardRepository()
-    {
-    }
+    public CardRepository() {}
 
     public List<Card> Cards
     {
@@ -17,17 +15,6 @@ public class CardRepository
             using var ctx = new PaymentSystemDbContext();
             return (from c in ctx.Cards
                     select c).ToList();
-        }
-    }
-
-    public int NextId
-    {
-        get
-        {
-            using var ctx = new PaymentSystemDbContext();
-            var maxId = (from c in ctx.Cards
-                         select (int?)c.Id).Max() ?? 0;
-            return maxId + 1;
         }
     }
     

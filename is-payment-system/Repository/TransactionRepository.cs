@@ -7,10 +7,7 @@ namespace is_payment_system.Repository;
 
 public class TransactionRepository
 {
-    public TransactionRepository()
-    {
-
-    }
+    public TransactionRepository() {}
 
     public List<Transaction> Transactions
     {
@@ -21,17 +18,6 @@ public class TransactionRepository
                     select t).ToList();
         }
     }
-
-    public int NextId
-    {
-        get
-        {
-            using var ctx = new PaymentSystemDbContext();
-            var maxId = (from t in ctx.Transactions
-                         select (int?)t.Id).Max() ?? 0;
-            return maxId + 1;
-        }
-    }
     
     public void AddTransaction(Transaction transaction)
     {
@@ -40,7 +26,7 @@ public class TransactionRepository
         ctx.SaveChanges();
     }
 
-    public Transaction FindTransactionBySenderID(int id)
+    public Transaction FindTransactionBySenderId(int id)
     {
         using var ctx = new PaymentSystemDbContext();
         return (from t in ctx.Transactions
@@ -48,7 +34,7 @@ public class TransactionRepository
                 select t).FirstOrDefault();
     }
 
-    public Transaction FindTransactionByReceiverID(int id)
+    public Transaction FindTransactionByReceiverId(int id)
     {
         using var ctx = new PaymentSystemDbContext();
         return (from t in ctx.Transactions
